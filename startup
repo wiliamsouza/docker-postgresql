@@ -1,0 +1,21 @@
+#!/bin/bash -e
+
+chown -R postgresql:postgresql /var/lib/postgresql
+chown -R postgresql:postgresql /var/log/postgresql
+
+rootpw=${POSTGRESQL_ROOT_PASSWORD:-""}
+mydb=${POSTGRESQL_DATABASE:-""}
+myuser=${POSTGRESQL_USER:-""}
+mypass=${POSTGRESQL_PASSWORD:-""}
+mychset=${POSTGRESQL_CHARACTER_SET:-"utf8"}
+myhost=${GRANT_HOSTNAME:-"%"}
+
+#if [[ $mydb != "" ]]; then
+#    echo "CREATE DATABASE IF NOT EXISTS \`$mydb\` CHARACTER SET \`$mychset\` COLLATE \`$mycollate\`;" >> $tfile
+#
+#    if [[ $myuser != "" ]]; then
+#        echo "GRANT ALL ON \`$mydb\`.* TO '$myuser'@'$myhost' IDENTIFIED BY '$mypass';" >> $tfile
+#    fi
+#fi
+
+exec supervisord
