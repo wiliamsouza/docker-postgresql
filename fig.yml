@@ -1,7 +1,7 @@
 postgresql:
   image: devoto13/postgresql
   ports:
-    - "5433:5432"
+    - "5432:5432"
   volumes:
     - volumes/log:/var/log/postgresql
     - volumes/lib:/var/lib/postgresql/9.3/main
