@@ -1,7 +1,8 @@
 #!/bin/bash -e
 
-chown -R postgres:postgres /var/lib/postgresql
+chown -R postgres:postgres /var/lib/postgresql/9.3/main
 chown -R postgres:postgres /var/log/postgresql
+chown -R postgres:postgres /etc/postgresql/9.3/main/conf.d
 
 mydb=${POSTGRESQL_DATABASE:-""}
 myuser=${POSTGRESQL_USER:-""}

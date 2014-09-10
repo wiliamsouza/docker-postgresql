@@ -28,16 +28,13 @@ RUN chmod +x /usr/local/bin/startup
 
 CMD ["/usr/local/bin/startup"]
 
-# environment
-
-# sources
-
-# ppas
-
 # postgresql
-RUN apt-get install postgresql-9.3 -y
-RUN update-rc.d -f postgresql disable
+RUN apt-get install -y wget
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+RUN wget --quiet --no-check-certificate -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+RUN apt-get update
+RUN apt-get -y install sudo postgresql-9.3
 
-VOLUME ["/var/lib/postgresql", "/var/log/postgresql", "/etc/postgresql/conf.d"]
+VOLUME ["/var/lib/postgresql/9.3/main", "/var/log/postgresql", "/etc/postgresql/9.3/main/conf.d"]
 
 EXPOSE 5432
