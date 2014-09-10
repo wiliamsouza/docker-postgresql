@@ -1,11 +1,11 @@
 postgresql:
-  image: wiliamsouza/postgresql
+  image: devoto13/postgresql
   ports:
     - "5433:5432"
   volumes:
     - volumes/log:/var/log/postgresql
     - volumes/lib:/var/lib/postgresql/9.3/main
   environment:
-    - POSTGRESQL_DATABASE: mydb
-    - POSTGRESQL_USER: myuser
-    - POSTGRESQL_PASSWORD: mypass
+    - POSTGRESQL_DATABASE=mydb
+    - POSTGRESQL_USER=myuser
+    - POSTGRESQL_PASSWORD=mypass

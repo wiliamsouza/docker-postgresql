@@ -1,10 +1,18 @@
 #!/bin/bash -e
 
-chown -R postgres:postgres /var/lib/postgresql/9.3/main
 chown -R postgres:postgres /var/log/postgresql
-chown -R postgres:postgres /etc/postgresql/9.3/main/conf.d
+chmod 0755 /var/log/postgresql
 
-PATH=/usr/lib/postgresql/9.3/bin
+chown -R postgres:postgres /etc/postgresql/9.3/main/conf.d
+chmod 0755 /etc/postgresql/9.3/main/conf.d
+
+chown -R postgres:postgres /var/lib/postgresql/9.3/main
+chmod 0700 /var/lib/postgresql/9.3/main
+if [ ! "$(ls -A /var/lib/postgresql/9.3/main)" ]; then
+    sudo -u postgres /usr/lib/postgresql/9.3/bin/initdb -D /var/lib/postgresql/9.3/main -E utf8 --locale en_US.UTF-8
+fi
+
+POSTGRES=/usr/lib/postgresql/9.3/bin/postgres
 CONFIG=/etc/postgresql/9.3/main/postgresql.conf
 
 mydb=${POSTGRESQL_DATABASE:-""}
@@ -14,10 +22,10 @@ mychset=${POSTGRESQL_CHARACTER_SET:-"utf8"}
 myhost=${GRANT_HOSTNAME:-"%"}
 
 if [[ $mydb != "" ]]; then
-   sudo -u postgres $PATH/postgres --single --config-file=$CONFIG <<< "CREATE DATABASE IF NOT EXISTS \`$mydb\` CHARACTER SET \`$mychset\` COLLATE \`$mycollate\`;"
+   sudo -u postgres $POSTGRES --single --config-file=$CONFIG <<< "CREATE DATABASE IF NOT EXISTS \`$mydb\` CHARACTER SET \`$mychset\` COLLATE \`$mycollate\`;"
 
    if [[ $myuser != "" ]]; then
-       sudo -u postgres $PATH/postgres --single --config-file=$CONFIG <<< "GRANT ALL ON \`$mydb\`.* TO '$myuser'@'$myhost' IDENTIFIED BY '$mypass';"
+       sudo -u postgres $POSTGRES --single --config-file=$CONFIG <<< "GRANT ALL ON \`$mydb\`.* TO '$myuser'@'$myhost' IDENTIFIED BY '$mypass';"
    fi
 fi
 
