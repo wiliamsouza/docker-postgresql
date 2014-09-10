@@ -6,7 +6,6 @@ postgresql:
     - volumes/log:/var/log/postgresql
     - volumes/lib:/var/lib/postgresql
   environment:
-    - POSTGRESQL_ROOT_PASSWORD: rootpass
     - POSTGRESQL_DATABASE: mydb
     - POSTGRESQL_USER: myuser
     - POSTGRESQL_PASSWORD: mypass

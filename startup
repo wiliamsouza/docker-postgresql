@@ -3,7 +3,6 @@
 chown -R postgres:postgres /var/lib/postgresql
 chown -R postgres:postgres /var/log/postgresql
 
-rootpw=${POSTGRESQL_ROOT_PASSWORD:-""}
 mydb=${POSTGRESQL_DATABASE:-""}
 myuser=${POSTGRESQL_USER:-""}
 mypass=${POSTGRESQL_PASSWORD:-""}
