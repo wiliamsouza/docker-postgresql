@@ -35,6 +35,8 @@ RUN wget --quiet --no-check-certificate -O - https://www.postgresql.org/media/ke
 RUN apt-get update
 RUN apt-get -y install sudo postgresql-9.3
 
+RUN echo "host    all    all    172.17.0.0/16    md5" >> /etc/postgresql/9.3/main/pg_hba.conf
+
 VOLUME ["/var/lib/postgresql/9.3/main", "/var/log/postgresql", "/etc/postgresql/9.3/main/conf.d"]
 
 EXPOSE 5432
