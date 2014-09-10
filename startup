@@ -8,25 +8,15 @@ chmod 0755 /etc/postgresql/9.3/main/conf.d
 
 chown -R postgres:postgres /var/lib/postgresql/9.3/main
 chmod 0700 /var/lib/postgresql/9.3/main
+
 if [ ! "$(ls -A /var/lib/postgresql/9.3/main)" ]; then
     sudo -u postgres /usr/lib/postgresql/9.3/bin/initdb -D /var/lib/postgresql/9.3/main -E utf8 --locale en_US.UTF-8
-fi
 
-POSTGRES=/usr/lib/postgresql/9.3/bin/postgres
-CONFIG=/etc/postgresql/9.3/main/postgresql.conf
+    POSTGRES=/usr/lib/postgresql/9.3/bin/postgres
+    CONFIG=/etc/postgresql/9.3/main/postgresql.conf
 
-mydb=${POSTGRESQL_DATABASE:-""}
-myuser=${POSTGRESQL_USER:-""}
-mypass=${POSTGRESQL_PASSWORD:-""}
-mychset=${POSTGRESQL_CHARACTER_SET:-"utf8"}
-myhost=${GRANT_HOSTNAME:-"%"}
-
-if [[ $mydb != "" ]]; then
-   sudo -u postgres $POSTGRES --single --config-file=$CONFIG <<< "CREATE DATABASE IF NOT EXISTS \`$mydb\` CHARACTER SET \`$mychset\` COLLATE \`$mycollate\`;"
-
-   if [[ $myuser != "" ]]; then
-       sudo -u postgres $POSTGRES --single --config-file=$CONFIG <<< "GRANT ALL ON \`$mydb\`.* TO '$myuser'@'$myhost' IDENTIFIED BY '$mypass';"
-   fi
+    sudo -u postgres $POSTGRES --single --config-file=$CONFIG <<< "CREATE USER $POSTGRESQL_USER WITH PASSWORD '$POSTGRESQL_PASSWORD';"
+    sudo -u postgres $POSTGRES --single --config-file=$CONFIG <<< "CREATE DATABASE $POSTGRESQL_DATABASE OWNER $POSTGRESQL_USER;"
 fi
 
 exec supervisord

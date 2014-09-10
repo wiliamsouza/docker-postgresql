@@ -42,9 +42,6 @@ Environment variable:
 * `POSTGRESQL_DATABASE`: Database name.
 * `POSTGRESQL_USER`: If `POSTGRESQL_DATABASE` is specified create a user.
 * `POSTGRESQL_PASSWORD`: Password for `POSTGRESQL_USER`.
-* `POSTGRESQL_CHARACTER_SET`: Character set for `POSTGRESQL_DATABASE`.
-* `POSTGRESQL_COLLATE`: Collate for `POSTGRESQL_DATABASE`.
-* `GRANT_HOSTNAME`: Hostname used on `GRANT` for `POSTGRESQL_DATABASE`.
 
 You pass with `-e` docker option.
 
