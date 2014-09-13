@@ -12,11 +12,14 @@ chmod 0700 /var/lib/postgresql/9.3/main
 if [ ! "$(ls -A /var/lib/postgresql/9.3/main)" ]; then
     sudo -u postgres /usr/lib/postgresql/9.3/bin/initdb -D /var/lib/postgresql/9.3/main -E utf8 --locale en_US.UTF-8
 
-    POSTGRES=/usr/lib/postgresql/9.3/bin/postgres
-    CONFIG=/etc/postgresql/9.3/main/postgresql.conf
+    if [ $POSTGRESQL_USER ] && [ $POSTGRESQL_PASSWORD ] && [ $POSTGRESQL_DATABASE ]; then
+        POSTGRES=/usr/lib/postgresql/9.3/bin/postgres
+        CONFIG=/etc/postgresql/9.3/main/postgresql.conf
 
-    sudo -u postgres $POSTGRES --single --config-file=$CONFIG <<< "CREATE USER $POSTGRESQL_USER WITH PASSWORD '$POSTGRESQL_PASSWORD';"
-    sudo -u postgres $POSTGRES --single --config-file=$CONFIG <<< "CREATE DATABASE $POSTGRESQL_DATABASE OWNER $POSTGRESQL_USER;"
+        sudo -u postgres $POSTGRES --single --config-file=$CONFIG <<< "CREATE USER $POSTGRESQL_USER WITH PASSWORD '$POSTGRESQL_PASSWORD';"
+        sudo -u postgres $POSTGRES --single --config-file=$CONFIG <<< "CREATE DATABASE $POSTGRESQL_DATABASE OWNER $POSTGRESQL_USER;"
+        echo "Database $POSTGRESQL_DATABASE created for $POSTGRESQL_USER."
+    fi
 fi
 
 exec supervisord -c /etc/supervisor/conf.d/supervisord.conf

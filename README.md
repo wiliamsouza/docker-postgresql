@@ -3,6 +3,8 @@ docker-postgresql
 
 Docker postgresql server generic image source. This is based on `ubuntu:14.04` image.
 
+If mounted data volume is empty and all environment variables are specified new database and user will be created (see environment variables below).
+
 Image
 -----
 
@@ -40,7 +42,7 @@ You pass with `-v` docker option. Don't forget to use absolute path here.
 Environment variable:
 
 * `POSTGRESQL_DATABASE`: Database name.
-* `POSTGRESQL_USER`: If `POSTGRESQL_DATABASE` is specified create a user.
+* `POSTGRESQL_USER`: Owner of `POSTGRESQL_DATABASE`.
 * `POSTGRESQL_PASSWORD`: Password for `POSTGRESQL_USER`.
 
 You pass with `-e` docker option.
