@@ -19,4 +19,4 @@ if [ ! "$(ls -A /var/lib/postgresql/9.3/main)" ]; then
     sudo -u postgres $POSTGRES --single --config-file=$CONFIG <<< "CREATE DATABASE $POSTGRESQL_DATABASE OWNER $POSTGRESQL_USER;"
 fi
 
-exec supervisord
+exec supervisord -c /etc/supervisor/conf.d/supervisord.conf
