@@ -28,6 +28,7 @@ CMD ["/usr/local/bin/startup"]
 RUN apt-get -y install postgresql-9.3
 RUN echo "host all all 172.17.0.0/16 md5" >> /etc/postgresql/9.3/main/pg_hba.conf
 RUN sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/g" /etc/postgresql/9.3/main/postgresql.conf
+RUN sed -i "s/#include_dir = 'conf.d'/include_dir = 'conf.d'/g" /etc/postgresql/9.3/main/postgresql.conf
 
 VOLUME ["/var/lib/postgresql/9.3/main", "/var/log/postgresql", "/etc/postgresql/9.3/main/conf.d"]
 
