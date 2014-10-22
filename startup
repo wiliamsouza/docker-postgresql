@@ -7,7 +7,7 @@ chown -R postgres:postgres /etc/postgresql/9.3/main/conf.d
 chmod 0755 /etc/postgresql/9.3/main/conf.d
 
 chown -R postgres:postgres /var/lib/postgresql/9.3/main
-chmod 0755 /var/lib/postgresql/9.3/main
+chmod 0700 /var/lib/postgresql/9.3/main
 
 if [ ! "$(ls -A /var/lib/postgresql/9.3/main)" ]; then
     sudo -u postgres /usr/lib/postgresql/9.3/bin/initdb -D /var/lib/postgresql/9.3/main -E utf8 --locale en_US.UTF-8
