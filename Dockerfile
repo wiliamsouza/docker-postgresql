@@ -1,10 +1,6 @@
-# PostgreSQL server generic image
-#
-# Version 0.1.0
-
 FROM ubuntu:14.04
 
-MAINTAINER Wiliam Souza <wiliamsouza83@gmail.com>
+MAINTAINER Yaroslav Admin <devoto13@gmail.com>
 
 # base
 ENV LANG en_US.UTF-8
@@ -28,16 +24,11 @@ RUN chmod +x /usr/local/bin/startup
 
 CMD ["/usr/local/bin/startup"]
 
-# environment
-
-# sources
-
-# ppas
-
 # postgresql
-RUN apt-get install postgresql-9.3 -y
-RUN update-rc.d -f postgresql disable
+RUN apt-get -y install postgresql-9.3
+ADD postgresql.conf /etc/postgresql/9.3/main/postgresql.conf
+ADD pg_hba.conf /etc/postgresql/9.3/main/pg_hba.conf
 
-VOLUME ["/var/lib/postgresql", "/var/log/postgresql", "/etc/postgresql/conf.d"]
+VOLUME ["/var/lib/postgresql/9.3/main", "/var/log/postgresql", "/etc/postgresql/9.3/main/conf.d"]
 
 EXPOSE 5432
